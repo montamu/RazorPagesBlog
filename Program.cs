@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using RazorPagesBlog.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// dbコンテキスト設定
+builder.Services.AddDbContext<RazorPagesBlogContext>(Options =>
+    Options.UseSqlite(builder.Configuration.GetConnectionString("RazorPagesBlogContext") ?? throw new InvalidOperationException("Connection string 'RazorPagesBlogContext' not found.")));
 
 var app = builder.Build();
 
