@@ -41,6 +41,10 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Blog.Like)
         </dd>
+        <form method="post" asp-page-handler="Like">
+            <input type="hidden" name="blogId" value="@Model.Blog.Id" />
+            <button type="submit" class="btn btn-primary">いいね!</button>
+        </form>
     </dl>
 </div>
 <div>

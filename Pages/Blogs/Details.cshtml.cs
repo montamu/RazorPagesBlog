@@ -19,6 +19,7 @@ namespace RazorPagesBlog.Pages_Blogs
             _context = context;
         }
 
+        [BindProperty]
         public Blog Blog { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -38,6 +39,23 @@ namespace RazorPagesBlog.Pages_Blogs
                 Blog = blog;
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostLikeAsync(int blogId)
+        {
+            var blog = await _context.Blog.FindAsync(blogId);
+
+            if (blog == null)
+            {
+                return NotFound();
+            }
+
+            blog.Like += 1;
+
+            _context.Attach(blog).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Details", new { id = blogId });
         }
     }
 }
