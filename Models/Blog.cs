@@ -20,5 +20,8 @@ public class Blog
     [Required]
     [DisplayName("内容")]
     public string Content { get; set; } = string.Empty;
+    // いいね
     public int Like { get; set; }
+    // ブログに対するコメント
+    public ICollection<Comment>? Comments { get; set; }
 }

@@ -14,6 +14,17 @@ namespace RazorPagesBlog.Data
         {
         }
 
-        public DbSet<Blog> Blog { get; set; } = default!;
+        public DbSet<Blog> Blog { get; set; }
+        public DbSet<Comment> Comment { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Blog>()
+                .HasMany(b => b.Comments)
+                .WithOne(c => c.Blog)
+                .HasForeignKey(c => c.BlogId);
+        }
     }
 }
